@@ -1,16 +1,29 @@
 package com.improve10x.exam;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 
 public class FacebookNotificationActivity extends AppCompatActivity {
     FacebookNotificationItem[] facebookNotificationItem;
+    RecyclerView notificationsRv;
+    FacebookNotificationAdapter facebookNotificationAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_facebook_notification);
+        initViews();
+        createData();
+        createAdapter();
+        connectAdapter();
+    }
+
+    private void initViews() {
+        notificationsRv = findViewById(R.id.notifications_rv);
     }
 
     public void createData(){
@@ -50,5 +63,14 @@ public class FacebookNotificationActivity extends AppCompatActivity {
         facebookNotificationItem[6].name = "Bobby Alvarez and others added to their stories.";
         facebookNotificationItem[6].time = "2 hours ago";
         facebookNotificationItem[6].profileUrl = "https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-128.png";
+    }
+
+    public void createAdapter(){
+        facebookNotificationAdapter = new FacebookNotificationAdapter(facebookNotificationItem);
+    }
+
+    public void connectAdapter(){
+        notificationsRv.setLayoutManager(new LinearLayoutManager(this));
+        notificationsRv.setAdapter(facebookNotificationAdapter);
     }
 }

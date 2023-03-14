@@ -7,7 +7,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class FacebookNotificationAdapter extends RecyclerView.Adapter {
+import com.squareup.picasso.Picasso;
+
+public class FacebookNotificationAdapter extends RecyclerView.Adapter<FacebookNotificationViewHolder> {
     FacebookNotificationItem[] items;
 
     public FacebookNotificationAdapter(FacebookNotificationItem[] facebookNotificationItems){
@@ -16,7 +18,7 @@ public class FacebookNotificationAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FacebookNotificationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.facebook_notification_item,parent,false);
         FacebookNotificationViewHolder viewHolder = new FacebookNotificationViewHolder(view);
@@ -24,12 +26,16 @@ public class FacebookNotificationAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull FacebookNotificationViewHolder holder, int position) {
+        FacebookNotificationItem item = items[position];
+        holder.nameTxt.setText(item.name);
+        holder.timeTxt.setText(item.time);
+        Picasso.get().load(item.profileUrl).into(holder.fbProfileIv);
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return items.length;
     }
 }
